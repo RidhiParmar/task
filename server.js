@@ -23,10 +23,26 @@ app.post('/User',(req,res)=>
     })
 
 })
-
-app.get('/user/me',authenticate,(req,res)=>
+app.get('/user/:id',authenticate,(req,res)=>
 {
-    res.send(req.user)
+    var id = req.params.id
+    ud.findById(id).then((data)=>
+    {
+       var token = data.tokens[0].token
+       var rtoken = req.user.tokens[0].token
+       if(token == rtoken)
+      {
+        res.send(req.user)
+      }
+      else{
+         res.send(data.name)
+      }
+    }).catch((e)=>
+    {
+        res.send(e)
+    })
+    
+    
 
 })
 app.post('/user/login',authenticate,(req,res)=>{

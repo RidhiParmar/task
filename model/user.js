@@ -49,8 +49,6 @@ var userschema = new mongoose.Schema({
         }
     }]
 })
-
-
 userschema.methods.toJSON = function()
 {
     var user = this
